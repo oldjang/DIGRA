@@ -7,23 +7,16 @@
 #include <random>
 //#include <sys/resource.h>
 
-#include "hnswlib/hnswlib.h"
-//#include "HNSW.hpp"
+//#include "hnswlib/hnswlib.h"
+#include "HNSW.hpp"
 #define BTREE_M 3
 #define BTREE_D 2
 
 
 using namespace hnswlib;
 
-
-void printMemoryUsage() {
-//    struct rusage usage;
-//    if (getrusage(RUSAGE_SELF, &usage) == 0) {
-//        std::cout << "Max Resident Set Size: " << usage.ru_maxrss << " KB\n";
-//    } else {
-//        std::cerr << "Error getting resource usage\n";
-//    }
-}
+#include <sys/resource.h>
+#include <unistd.h>
 
 class RangeHNSW {
 public:
@@ -61,7 +54,6 @@ public:
         memcpy(valueList_,valueList, eleNum * sizeof(int));
         memcpy(vecData_,vecData, eleNum * dim * sizeof(float));
 
-        printMemoryUsage();
 
         mult_ = 1 / log(1.0 * M);
         revSize_ = 1.0 / mult_;
@@ -81,10 +73,7 @@ public:
 
         sort(sortedArray.begin(),sortedArray.end(),[this](int a, int b) { return this->cmp(a, b); });
 
-        printMemoryUsage();
         root = buildTree(eleNum);
-
-        printMemoryUsage();
 
     }
 
@@ -190,7 +179,6 @@ public:
         isDeleted = (bool*) realloc(isDeleted, maxEleNum * sizeof(bool));
         memset(isDeleted,0,maxEleNum);
 
-        printMemoryUsage();
 
         mult_ = 1 / log(1.0 * M);
         revSize_ = 1.0 / mult_;
@@ -399,7 +387,6 @@ private:
 
 
     void addPoint(int id){
-        std::cout<<root->layer<<std::endl;
         if (root == NULL)
         {
             // Allocate memory for root
@@ -414,12 +401,11 @@ private:
                 newRoot->layer = root->layer + 1;
                 newRoot->keynum = 0;
                 newRoot->child[0] = root;
-                newRoot->entryPoint = root->entryPoint;
                 splitNode(newRoot,0);
-//                for(int i = 0; i < eleCount; i++){
-//                    memcpy(linklist[i] + root->layer *sizeLinkList, linklist[i] + (root->layer - 1) *sizeLinkList, sizeLinkList);
-//                }
-                refresh(newRoot);
+                for(int i = 0; i < eleCount; i++){
+                    memcpy(linklist[i] + root->layer *sizeLinkList, linklist[i] + (root->layer - 1) *sizeLinkList, sizeLinkList);
+                }
+//                refresh(newRoot);
                 root = newRoot;
             }
         }
