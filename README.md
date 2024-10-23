@@ -24,3 +24,9 @@ Parameter description:
 7. `[path_to_sift_base.fvecs]`: Path to the SIFT base vectors file
 8. `[path_to_sift_query.fvecs]`: Path to the SIFT query vectors file
 9. `[path_to_sift_base.data]`: Path to the SIFT base data file
+
+The `.data` file is a text file containing key-value pairs. Each line represents an entry in the format:
+
+```
+key value
+```
