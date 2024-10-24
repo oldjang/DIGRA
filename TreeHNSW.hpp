@@ -7,8 +7,7 @@
 #include <random>
 //#include <sys/resource.h>
 
-//#include "hnswlib/hnswlib.h"
-#include "HNSW.hpp"
+#include "hnswlib/hnswlib.h"
 #define BTREE_M 3
 #define BTREE_D 2
 
