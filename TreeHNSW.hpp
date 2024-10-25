@@ -5,7 +5,6 @@
 #include <unordered_map>
 #include <algorithm>
 #include <random>
-//#include <sys/resource.h>
 
 #include "hnswlib/hnswlib.h"
 #define BTREE_M 3
