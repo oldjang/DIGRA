@@ -10,7 +10,7 @@ cmake . && make
 
 Running example benchmark on SIFT dataset:
 ```bash
-./RangeHNSW 10000 1000 128 10 100 8 [path_to_sift_base.fvecs] [path_to_sift_query.fvecs] [path_to_sift_base.data]
+./Digra 10000 1000 128 10 100 8 [path_to_sift_base.fvecs] [path_to_sift_query.fvecs] [path_to_sift_base.data]
 ```
 
 Parameter description:
